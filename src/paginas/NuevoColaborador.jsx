@@ -13,6 +13,7 @@ const NuevoColaborador = () => {
     useEffect(() => {
         obtenerProyecto(params.id)
     }, []);
+    //console.log(colaborador)
 
     if(!proyecto?._id) return <Alerta alerta={alerta}/>
 
@@ -29,7 +30,7 @@ const NuevoColaborador = () => {
                     <div className=' bg-white py-10 px-5 md:w-1/2 rounded-lg shadow'>
                         <h2 className='text-center mb-10 text-2xl font-bold '>Resultado : </h2>
                         <div className='flex justify-between items-center'>
-                            <p> {colaborador.nombre}</p >
+                            <p> {colaborador.primernombre+" "+colaborador.primerapellido}</p >
 
                             <button
                                 type="button "

@@ -5,7 +5,11 @@ import clienteAxios from '../config/clienteAxios';
 
 const Registrar = () => {
 
-    const [nombre, setNombre] = useState('')
+    const [primernombre, setPrimernombre] = useState('')
+    const [segundonombre, setSegundoNombre] = useState('')
+    const [segundoapellido, setSegundoApellido] = useState('')
+    const [primerapellido, setPrimerApellido] = useState('')
+    const [celular, setCelular] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [repetirPassword, setRepetirPassword] = useState('')
@@ -14,15 +18,15 @@ const Registrar = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-//comprobar si los campos estan llenos
-        if ([nombre, email, password, repetirPassword].includes('')) {
+        //comprobar si los campos estan llenos
+        if ([primernombre, primerapellido, segundoapellido,celular,email, password, repetirPassword].includes('')) {
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
             })
             return
         }
-//comprobar si las contraseñas son iguales
+        //comprobar si las contraseñas son iguales
         if (password != repetirPassword) {
             setAlerta({
                 msg: 'Las contraseñas no son iguales',
@@ -30,7 +34,7 @@ const Registrar = () => {
             })
             return
         }
-//comprobar el tamaño de la contraseña
+        //comprobar el tamaño de la contraseña
         if (password.length < 6) {
             setAlerta({
                 msg: 'Contraseña muy corta agraga minimo 6 caracteres',
@@ -42,20 +46,24 @@ const Registrar = () => {
 
         //crear el usuario en la API
         try {
-            const {data} = await clienteAxios.post(`/usuarios`,{nombre,email,password});
-           setAlerta({
-            msg:data.msg,
-            error:false
-           })
-           setNombre('')
-           setEmail('')
-           setPassword('')
-           setRepetirPassword('')
+            const { data } = await clienteAxios.post(`/usuarios`, { primernombre,segundonombre,primerapellido, segundoapellido, celular,email, password });
+            setAlerta({
+                msg: data.msg,
+                error: false
+            })
+        setPrimernombre('')
+        setSegundoNombre('')
+        setPrimerApellido('')
+        setSegundoApellido('')
+        setCelular('')
+            setEmail('')
+            setPassword('')
+            setRepetirPassword('')
         } catch (error) {
-        setAlerta({
-            msg:error.response.data.msg,
-            error:true
-        })
+            setAlerta({
+                msg: error.response.data.msg,
+                error: true
+            })
         }
     }
     const { msg } = alerta
@@ -66,20 +74,60 @@ const Registrar = () => {
             {msg && <Alerta alerta={alerta} />}
             <form className="my-10 bg-white shadow rounded-lg px-10 py-5"
                 onSubmit={handleSubmit}>
-                <div>
-                    <label className="block text-l font-bold">Nombre</label>
-                    <input type="text" id="nombre"
-                        placeholder="Ingresa tu Nombre"
-                        className="w-full mt-3 p-3 border-2"
-                        value={nombre}
-                        onChange={e => setNombre(e.target.value)} />
+                <div className='flex w-full gap-2'>
+                    <div className=' w-full'>
+                        <label className="block text-l font-bold">Primer Nombre</label>
+                        <input type="text" id="nombre"
+                            placeholder="Ingresa tu P.Nombre"
+                            className="w-full mt-3 p-3 border-2 rounded-2xl"
+                            value={primernombre}
+                            onChange={e => setPrimernombre(e.target.value)} />
+                    </div>
+                    <div className=' w-full'>
+                        <label className="block text-l font-bold"> Segundo Nombre</label>
+                        <input type="text" id="nombre"
+                            placeholder="Ingresa tu S.Nombre"
+                            className="w-full mt-3 p-3 border-2 rounded-2xl"
+                            value={segundonombre}
+                            onChange={e => setSegundoNombre(e.target.value)} />
+                    </div>
                 </div>
 
+                <div className='flex w-full gap-2'>
+                <div className=' w-full'>
+                    <label className="block text-l font-bold">Primer Apellido</label>
+                    <input type="text" id="nombre"
+                        placeholder="Ingresa tu P.Apellido"
+                        className="w-full mt-3 p-3 border-2 rounded-2xl"
+                        value={primerapellido}
+                        onChange={e => setPrimerApellido(e.target.value)} />
+                </div>
+
+                <div className=' w-full'>
+                    <label className="block text-l font-bold">Segundo Apellido</label>
+                    <input type="text" id="nombre"
+                        placeholder="Ingresa tu S.Apellido"
+                        className="w-full mt-3 p-3 border-2 rounded-2xl"
+                        value={segundoapellido}
+                        onChange={e => setSegundoApellido(e.target.value)} />
+                </div>
+
+                </div>
                 <div>
-                    <label className="block text-l font-bold my-5">Email</label>
+                    <label className="block text-l font-bold my-2">Celular</label>
+                    <input type="number" id="email"
+                        placeholder="Numero de Celular"
+                        className="w-full mt-1 p-3 border-2 rounded-2xl"
+                        value={celular}
+                        onChange={e => setCelular(e.target.value)} />
+                </div>
+              
+
+                <div>
+                    <label className="block text-l font-bold my-2">Email</label>
                     <input type="email" id="email"
                         placeholder="Email de Registro"
-                        className="w-full mt-3 p-3 border-2"
+                        className="w-full mt-1 p-3 border-2 rounded-2xl"
                         value={email}
                         onChange={e => setEmail(e.target.value)} />
                 </div>
@@ -88,7 +136,7 @@ const Registrar = () => {
                     <label className="block text-l font-bold">Password</label>
                     <input type="Password" id="Password"
                         placeholder="Password de Registro"
-                        className="w-full mt-3 p-3 border-2"
+                        className="w-full mt-3 p-3 border-2 rounded-2xl"
                         value={password}
                         onChange={e => setPassword(e.target.value)} />
                 </div>
@@ -97,7 +145,7 @@ const Registrar = () => {
                     <label className="block text-l font-bold">Repetir Password</label>
                     <input type="Password" id="Password2"
                         placeholder="Repetir Password"
-                        className="w-full mt-3 p-3 border-2"
+                        className="w-full mt-3 p-3 border-2 rounded-2xl"
                         value={repetirPassword}
                         onChange={e => setRepetirPassword(e.target.value)} />
                 </div>
@@ -105,7 +153,8 @@ const Registrar = () => {
                 <input
                     type="submit"
                     value="Crear cuenta"
-                    className="bg-gray-500 w-full py-3 text-white font-bold uppercase rounded hover:cursor-pointer hover:bg-sky-800"
+                    className="bg-gray-500 w-full py-3 text-white font-bold
+                     uppercase rounded hover:cursor-pointer hover:bg-sky-800 rounded-3xl"
                 />
             </form>
             <nav className="lg:flex lg:justify-between">

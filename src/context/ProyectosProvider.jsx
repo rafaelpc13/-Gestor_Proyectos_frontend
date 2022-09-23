@@ -24,7 +24,7 @@ const ProyectosProvider = ({ children }) => {
 
 
     const navigate = useNavigate();
-    const {auth} = useAuth()
+    const { auth } = useAuth()
 
     useEffect(() => {
 
@@ -274,7 +274,7 @@ const ProyectosProvider = ({ children }) => {
                 }
             }
             const { data } = await clienteAxios.post('/proyectos/colaboradores', { email }, config)
-
+            //console.log(data)
             setColaborador(data)
             setAlerta({})
         } catch (error) {
@@ -379,7 +379,7 @@ const ProyectosProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const { data } = await clienteAxios.post(`/proyectos/eliminar-colaboradores/${proyecto._id}`, {}, config)
+            const { data } = await clienteAxios.post(`/proyectos/eliminar-colaborador/${proyecto._id}`, { id: colaborador._id }, config)
 
             const proyectoActualizado = { ...proyecto }
             proyectoActualizado.colaboradores = proyectoActualizado.colaboradores.filter
@@ -451,14 +451,14 @@ const ProyectosProvider = ({ children }) => {
         setProyecto(proyectoActualizado)
     }
 
-    const cambiarEstado = tarea =>{
+    const cambiarEstado = tarea => {
         const proyectoActualizado = { ...proyecto }
         proyectoActualizado.tareas = proyectoActualizado.tareas.map
             (tareaState => tareaState._id === tarea._id ? tarea : tareaState)
         setProyecto(proyectoActualizado)
     }
 
-    const cerrarSesion =()=>{
+    const cerrarSesion = () => {
         setProyectos([])
         setProyecto({})
         setAlerta({})

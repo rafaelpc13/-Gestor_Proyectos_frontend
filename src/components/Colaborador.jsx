@@ -6,14 +6,14 @@ const Colaborador = ({ colaborador }) => {
 
     const { handleEliminarColaborador, handleEliminarTarea } = useProyectos()
 
-    const {  nombre,email} = colaborador
+    const {  primernombre,email,primerapellido,celular} = colaborador
 
     return (
 
         <div className="border-b p-5 flex justify-between items-center">
 
             <div >
-                <p className="text-xl uppercase">{nombre}</p>
+                <p className="text-xl uppercase">{primernombre+" "+primerapellido}</p>
                 <p className="text-xl text-gray-400">{email}</p>
                 
             </div>
